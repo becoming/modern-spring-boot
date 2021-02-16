@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.RestController;
 import tech.becoming.modernspringboot.properties.UserProperties;
 
 @RestController
-public class Hello {
+public class HelloController {
 
     private final UserProperties properties;
 
-    public Hello(UserProperties properties) {this.properties = properties;}
+    public HelloController(UserProperties properties) {this.properties = properties;}
 
     @GetMapping
     public int hello() {

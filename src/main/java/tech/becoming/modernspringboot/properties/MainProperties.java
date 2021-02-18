@@ -6,11 +6,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties("app.user")
+@ConfigurationProperties("app.api")
 @Getter
 @Setter
-public class UserProperties {
+public class MainProperties {
 
-    private int maxAge = 65;
-    private int firstName = 65;
+    private String cors = "localhost";
 }

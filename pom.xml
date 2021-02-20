@@ -8,11 +8,10 @@
         <version>2.4.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>tech.becoming</groupId>
-    <artifactId>modern-spring-boot</artifactId>
+
+    <groupId>tech.becoming.modernspringboot</groupId>
+    <artifactId>app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>modern-spring-boot</name>
-    <description>Demo project for Modern Spring Boot</description>
 
     <properties>
         <java.version>11</java.version>

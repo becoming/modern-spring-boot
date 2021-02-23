@@ -18,6 +18,7 @@
     <properties>
         <java.version>11</java.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
+        <micrometer.version>1.6.4</micrometer.version>
         <org.projectlombok.version>1.18.16</org.projectlombok.version>
         <org.projectlombok.binding.version>0.2.0</org.projectlombok.binding.version>
         <maven.compiler.version>3.8.1</maven.compiler.version>
@@ -59,6 +60,19 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-elastic</artifactId>
+            <version>${micrometer.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>co.elastic.logging</groupId>
+            <artifactId>logback-ecs-encoder</artifactId>
+            <version>0.4.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>

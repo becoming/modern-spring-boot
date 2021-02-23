@@ -1,1 +1,5 @@
 GET localhost:8080/actuator/info
+
+###
+
+GET localhost:8080/actuator/health

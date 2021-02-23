@@ -1,13 +1,5 @@
 #  curl -L -O https://raw.githubusercontent.com/elastic/beats/7.11/deploy/docker/filebeat.docker.yml
 
-#filebeat.config:
-#  modules:
-#    path: ${path.config}/modules.d/*.yml
-#    reload.enabled: false
-
-#filebeat.modules:
-#  - module: elasticsearch
-
 filebeat.inputs:
   - type: log
     enabled: true
@@ -19,10 +11,5 @@ filebeat.inputs:
 setup.kibana:
   host: "kibana:5601"
 
-#processors:
-#  - add_cloud_metadata: ~
-
 output.elasticsearch:
   hosts: '${ELASTICSEARCH_HOSTS:elasticsearch:9200}'
-#  username: '${ELASTICSEARCH_USERNAME:}'
-#  password: '${ELASTICSEARCH_PASSWORD:}'

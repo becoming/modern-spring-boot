@@ -14,24 +14,6 @@ networks:
 
 services:
 
-  traefik:
-    image: library/traefik:v2.4.5
-    container_name: traefik-becoming
-    command:
-      - "--log.level=DEBUG"
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-    ports:
-      - 80:80
-      - 8080:8080
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    networks:
-      - infra
-      - becomingnet
-
   mysql:
     image: library/mysql:8.0.23
     container_name: mysql-becoming
@@ -95,13 +77,22 @@ services:
     container_name: filebeat-becoming
     image: docker.elastic.co/beats/filebeat:7.11.1
     user: root
-#    environment:
-#      - setup.kibana.host=kibana:5601
-#      - output.elasticsearch.hosts=["elasticsearch:9200"]
     volumes:
       - /tmp/becoming:/var/log/becoming
       - ./filebeat.docker.yml:/usr/share/filebeat/filebeat.yml
-#      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - infra
+      - becomingnet
+    depends_on:
+      - elasticsearch
+
+  apm:
+    container_name: apm-becoming
+    image: docker.elastic.co/apm/apm-server:7.11.1
+    environment:
+      - output.elasticsearch.hosts=["elasticsearch:9200"]
+    ports:
+      - 8200:8200
     networks:
       - infra
       - becomingnet

@@ -1,0 +1,91 @@
+version: '3'
+
+volumes:
+  mysql_data:
+    driver: local
+  elastic_data_becoming:
+    driver: local
+
+networks:
+  becomingnet:
+    external: true
+  infra:
+    internal: true
+
+services:
+
+  traefik:
+    image: library/traefik:v2.4.5
+    container_name: traefik-becoming
+    command:
+      #- "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - 80:80
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - infra
+      - becomingnet
+
+  mysql:
+    image: library/mysql:8.0.23
+    container_name: mysql-becoming
+    volumes:
+      - ~/.becoming/mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: modern-spring-app
+      MYSQL_USER: modern-spring-app
+      MYSQL_PASSWORD: password
+    ports:
+      - 8306:3306
+    networks:
+      - infra
+      - becomingnet
+
+  # https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
+  # For simplicity, running only a single node here
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.1
+    container_name: elasticsearch-becoming
+    environment:
+      - node.name=es01
+      - cluster.name=es-becoming-cluster
+      - cluster.initial_master_nodes=es01
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - elastic_data_becoming:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - infra
+      - becomingnet
+
+  kibana:
+    container_name: kibana-becoming
+    image: docker.elastic.co/kibana/kibana:7.11.1
+    environment:
+      - "ELASTICSEARCH_PASSWORD=password"
+      - server.port=127.0.0.1:5601
+      - elasticsearch.url="http://elasticsearch:9200"
+      - server.name="kibana"
+    ports:
+      - 5601:5601
+    healthcheck:
+      test: ["CMD", "curl", "-s", "-f", "http://localhost:5601/login"]
+      retries: 6
+    networks:
+      - infra
+      - becomingnet
+    depends_on:
+      - elasticsearch

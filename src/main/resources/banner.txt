@@ -1,0 +1,5 @@
+${AnsiColor.BLUE}
+${AnsiColor.BLUE} MODERN SPRING BOOT
+${AnsiColor.BLUE}
+${AnsiBackground.YELLOW}${AnsiColor.BLACK}   App ${application.formatted-version} // Spring Boot ${spring-boot.formatted-version}
+${AnsiStyle.NORMAL}

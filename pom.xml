@@ -11,6 +11,8 @@
 
     <groupId>tech.becoming.modernspringboot</groupId>
     <artifactId>app</artifactId>
+    <!--    It is good to have a meaningful name, it helps when using the Maven Panel inside Intellij Idea -->
+    <name>Modern Spring Boot / app</name>
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
@@ -57,6 +59,10 @@
                 <version>${project.parent.version}</version>
             </plugin>
 
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

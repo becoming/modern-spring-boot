@@ -9,7 +9,6 @@ import tech.becoming.modernspringboot.api.PatchRobotDto;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -34,12 +33,6 @@ public class RobotsService {
         return repository
                 .findById(id)
                 .orElseThrow(NotFoundException::new);
-    }
-
-    public Optional<Robot> findOptionalById(Long id) {
-        helper.validateId(id);
-
-        return repository.findById(id);
     }
 
     public Robot create(NewRobotDto dto) {

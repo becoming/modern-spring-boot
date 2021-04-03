@@ -2,7 +2,6 @@ package tech.becoming.modernspringboot.api;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import tech.becoming.common.exceptions.NotFoundException;
 import tech.becoming.modernspringboot.domain.RobotsMapper;
 import tech.becoming.modernspringboot.domain.RobotsService;
 
@@ -32,15 +31,6 @@ public class RobotsController {
         var robot = service.findById(id);
 
         return mapper.toDto(robot);
-    }
-
-    @GetMapping("{id}/optional")
-    public RobotDto getOptionalRobot(@PathVariable Long id) {
-
-        return service
-                .findOptionalById(id)
-                .map(mapper::toDto)
-                .orElseThrow(NotFoundException::new);
     }
 
     @PostMapping

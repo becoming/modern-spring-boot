@@ -3,6 +3,11 @@ GET localhost:7070/robots/1
 Content-Type: application/json
 
 ###
+# Not found
+GET localhost:7070/robots/696969
+Content-Type: application/json
+
+###
 
 # Get all robots, paginated
 GET localhost:7070/robots

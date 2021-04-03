@@ -13,90 +13,73 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class RobotsHelper {
+class RobotsHelper {
 
     private final MainProperties properties;
 
     public void validatePage(int page, int size) {
         List<ExceptionDetail> details = new ArrayList<>();
+
         if (page < 0) {
-            final var i = ExceptionDetail
-                    .builder()
-                    .name("page")
-                    .message("Page value must be a positive number.")
-                    .build();
+            var i = ExceptionDetail.ofNameAndMessage(
+                    "page",
+                    "Page value must be a positive number.");
 
             details.add(i);
         }
 
         if (size < 0) {
-            final var i = ExceptionDetail
-                    .builder()
-                    .name("size")
-                    .message("Size value must be a positive number.")
-                    .build();
+            var i = ExceptionDetail.ofNameAndMessage(
+                    "size",
+                    "Size value must be a positive number.");
 
             details.add(i);
         }
 
         if (size > properties.getMaxPageSize()) {
-            final var i = ExceptionDetail
-                    .builder()
-                    .name("size")
-                    .message("Size value must be lower than " + properties.getMaxPageSize() + ".")
-                    .build();
+            var i = ExceptionDetail.ofNameAndMessage(
+                    "size",
+                    "Size value must be lower than " + properties.getMaxPageSize() + ".");
 
             details.add(i);
         }
 
-        if(details.size() > 0) {
-            throw new BadRequestException(details);
-        }
+        BadRequestException.throwIfHasDetails(details);
     }
 
     public void validateId(Long id) {
         List<ExceptionDetail> details = new ArrayList<>();
 
         if (id < 0) {
-            final var i = ExceptionDetail
-                    .builder()
-                    .name("id")
-                    .message("ID value must be a positive number.")
-                    .build();
+            var i = ExceptionDetail.ofNameAndMessage(
+                    "id",
+                    "ID value must be a positive number.");
 
             details.add(i);
         }
 
-        if(details.size() > 0) {
-            throw new BadRequestException(details);
-        }
+        BadRequestException.throwIfHasDetails(details);
     }
 
     public void validate(NewRobotRequest dto) {
         List<ExceptionDetail> details = new ArrayList<>();
         if (isEmpty(dto.getName())) {
-            final var i = ExceptionDetail
-                    .builder()
-                    .name("name")
-                    .message("Name value must be a string with at least one character.")
-                    .build();
+            var i = ExceptionDetail.ofNameAndMessage(
+                    "name",
+                    "Name value must be a string with at least one character.");
 
             details.add(i);
         }
 
         if (dto.getName().length() > properties.getMaxNameChars()) {
-            final var i = ExceptionDetail
-                    .builder()
-                    .name("name")
-                    .message("Name length must be shorter than " + properties.getMaxNameChars() + " characters.")
-                    .build();
+            var i = ExceptionDetail.ofNameAndMessage(
+                    "name",
+                    "Name length must be shorter than " + properties.getMaxNameChars() + " characters.");
 
             details.add(i);
         }
 
-        if(details.size() > 0) {
-            throw new BadRequestException(details);
-        }
+        BadRequestException.throwIfHasDetails(details);
     }
 
     // suppressed for the sake of demo
@@ -104,28 +87,22 @@ public class RobotsHelper {
     public void validate(PatchRobotRequest dto) {
         List<ExceptionDetail> details = new ArrayList<>();
         if (isEmpty(dto.getName())) {
-            final var i = ExceptionDetail
-                    .builder()
-                    .name("name")
-                    .message("Name value must be a string with at least one character.")
-                    .build();
+            var i = ExceptionDetail.ofNameAndMessage(
+                    "name",
+                    "Name value must be a string with at least one character.");
 
             details.add(i);
         }
 
         if (dto.getName().length() > properties.getMaxNameChars()) {
-            final var i = ExceptionDetail
-                    .builder()
-                    .name("name")
-                    .message("Name length must be shorter than " + properties.getMaxNameChars() + " characters.")
-                    .build();
+            var i = ExceptionDetail.ofNameAndMessage(
+                    "name",
+                    "Name length must be shorter than " + properties.getMaxNameChars() + " characters.");
 
             details.add(i);
         }
 
-        if(details.size() > 0) {
-            throw new BadRequestException(details);
-        }
+        BadRequestException.throwIfHasDetails(details);
     }
 
     private boolean isEmpty(String s) {

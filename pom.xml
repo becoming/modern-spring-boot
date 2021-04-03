@@ -20,6 +20,7 @@
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
         <org.projectlombok.version>1.18.16</org.projectlombok.version>
         <org.projectlombok.binding.version>0.2.0</org.projectlombok.binding.version>
+        <org.liquibase.version>3.8.5</org.liquibase.version>
         <elastic-apm.version>1.21.0</elastic-apm.version>
         <maven.compiler.version>3.8.1</maven.compiler.version>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
@@ -43,6 +44,11 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>${org.liquibase.version}</version>
         </dependency>
 
         <dependency>

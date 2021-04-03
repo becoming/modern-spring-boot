@@ -30,7 +30,8 @@ public class RobotsService {
                 .map(repository::findAll)
                 .map(robots -> robots.getContent().stream())
                 .map(stream -> stream.map(mapper::toDto))
-                .map(stream -> stream.collect(Collectors.toList()));
+                .map(stream -> stream.collect(Collectors.toList()))
+                .onFailure(e -> log.error("Could not perform the find in range."));
     }
 
     public Try<RobotView> findById(Long id) {

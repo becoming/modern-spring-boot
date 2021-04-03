@@ -1,0 +1,29 @@
+GET localhost:7070/robots/1
+Content-Type: application/json
+
+###
+
+GET localhost:7070/robots
+Content-Type: application/json
+
+###
+
+POST localhost:7070/robots
+Content-Type: application/json
+
+{
+"name": "new robot",
+"description": "new robot created with API"
+
+}
+
+###
+
+PUT localhost:7070/robots/2
+Content-Type: application/json
+
+{
+"name": "new robot - updated name",
+"description": "new robot created with API - updated description"
+
+}

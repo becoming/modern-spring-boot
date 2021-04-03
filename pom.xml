@@ -20,8 +20,9 @@
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
         <org.projectlombok.version>1.18.16</org.projectlombok.version>
         <org.projectlombok.binding.version>0.2.0</org.projectlombok.binding.version>
-        <maven.compiler.version>3.8.1</maven.compiler.version>
         <elastic-apm.version>1.21.0</elastic-apm.version>
+        <maven.compiler.version>3.8.1</maven.compiler.version>
+        <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
     </properties>
 
     <dependencies>
@@ -76,7 +77,20 @@
     </dependencies>
 
     <build>
+        <finalName>app</finalName>
         <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven-jar-plugin.version}</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*-local.*</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

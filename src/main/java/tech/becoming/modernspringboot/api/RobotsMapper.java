@@ -8,4 +8,5 @@ public interface RobotsMapper {
 
     RobotDto toDto(Robot robot);
 
+    Robot toEntity(NewRobotDto dto);
 }

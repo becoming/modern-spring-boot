@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.time.Instant;
 
 @Entity
 @NoArgsConstructor
@@ -17,4 +18,12 @@ public class Robot {
     @Id
     @GeneratedValue
     private Long id;
+
+    private String name;
+
+    private String description;
+
+    private Instant created;
+
+    private Instant updated;
 }

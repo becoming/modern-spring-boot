@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service;
 import tech.becoming.common.exceptions.NotFoundException;
 import tech.becoming.modernspringboot.api.NewRobotDto;
 import tech.becoming.modernspringboot.api.PatchRobotDto;
-import tech.becoming.modernspringboot.api.RobotsMapper;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -58,16 +58,17 @@ public class RobotsService {
         return repository.save(robot);
     }
 
-    private Robot update(Robot robot, PatchRobotDto dto) {
-        robot.setName(dto.getName());
-        robot.setDescription(dto.getDescription());
+    private Robot setupNew(Robot robot) {
+        robot.setCreated(Instant.now());
         robot.setUpdated(Instant.now());
+        robot.setInternalUid(UUID.randomUUID().toString());
 
         return robot;
     }
 
-    private Robot setupNew(Robot robot) {
-        robot.setCreated(Instant.now());
+    private Robot update(Robot robot, PatchRobotDto dto) {
+        robot.setName(dto.getName());
+        robot.setDescription(dto.getDescription());
         robot.setUpdated(Instant.now());
 
         return robot;

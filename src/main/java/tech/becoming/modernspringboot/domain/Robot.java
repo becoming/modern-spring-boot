@@ -22,6 +22,8 @@ public class Robot {
 
     private String description;
 
+    private String internalUid;
+
     private Instant created;
 
     private Instant updated;

@@ -1,7 +1,10 @@
 package tech.becoming.modernspringboot.domain;
 
+import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import tech.becoming.common.exceptions.NotFoundException;
 import tech.becoming.modernspringboot.domain.dto.NewRobotRequest;
@@ -9,37 +12,38 @@ import tech.becoming.modernspringboot.domain.dto.PatchRobotRequest;
 import tech.becoming.modernspringboot.domain.dto.RobotView;
 
 import java.time.Instant;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class RobotsService {
 
     private final RobotsRepository repository;
     private final RobotsHelper     helper;
     private final RobotsMapper     mapper;
 
-    public List<RobotView> findInRange(int page, int size) {
-        helper.validatePage(page, size);
-
-        return repository
-                .findAll(PageRequest.of(page, size))
-                .getContent()
-                .stream()
-                .map(mapper::toDto)
-                .collect(Collectors.toList());
+    public Try<List<RobotView>> findInRange(int page, int size) {
+        return Try.run(() -> helper.validatePage(page, size))
+                .map($ -> PageRequest.of(page, size))
+                .map(repository::findAll)
+                .map(Slice::getContent)
+                .map(Collection::stream)
+                .map(stream -> stream.map(mapper::toDto))
+                .map(stream -> stream.collect(Collectors.toList()));
     }
 
-    public RobotView findById(Long id) {
-        helper.validateId(id);
-
-        var robot = repository
-                .findById(id)
-                .orElseThrow(NotFoundException::new);
-
-        return mapper.toDto(robot);
+    public Try<RobotView> findById(Long id) {
+        return Try.of(() -> id)
+                .andThen(helper::validateId)
+                .mapTry($ -> repository.findById(id))
+                .mapTry(Optional::get)
+                .mapTry(mapper::toDto)
+                .onFailure(throwable -> log.error(throwable.getMessage()));
     }
 
     public RobotView create(NewRobotRequest dto) {

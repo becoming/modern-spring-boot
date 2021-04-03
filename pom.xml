@@ -63,6 +63,11 @@
             <artifactId>common</artifactId>
             <version>1.0.2</version>
         </dependency>
+        <dependency>
+            <groupId>io.vavr</groupId>
+            <artifactId>vavr</artifactId>
+            <version>0.10.3</version>
+        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -81,17 +86,17 @@
             <optional>true</optional>
         </dependency>
 
-        <dependency>
-            <groupId>co.elastic.apm</groupId>
-            <artifactId>apm-agent-attach</artifactId>
-            <version>${elastic-apm.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>co.elastic.apm</groupId>-->
+<!--            <artifactId>apm-agent-attach</artifactId>-->
+<!--            <version>${elastic-apm.version}</version>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <groupId>co.elastic.logging</groupId>
-            <artifactId>logback-ecs-encoder</artifactId>
-            <version>0.4.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>co.elastic.logging</groupId>-->
+<!--            <artifactId>logback-ecs-encoder</artifactId>-->
+<!--            <version>0.4.0</version>-->
+<!--        </dependency>-->
 
     </dependencies>
 

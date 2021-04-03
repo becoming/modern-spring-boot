@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import tech.becoming.common.exceptions.NotFoundException;
+import tech.becoming.modernspringboot.domain.dto.NewRobotRequest;
+import tech.becoming.modernspringboot.domain.dto.PatchRobotRequest;
+import tech.becoming.modernspringboot.domain.dto.RobotView;
 
 import java.time.Instant;
 import java.util.List;

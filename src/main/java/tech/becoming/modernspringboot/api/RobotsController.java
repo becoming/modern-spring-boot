@@ -2,9 +2,9 @@ package tech.becoming.modernspringboot.api;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import tech.becoming.modernspringboot.domain.NewRobotRequest;
-import tech.becoming.modernspringboot.domain.PatchRobotRequest;
-import tech.becoming.modernspringboot.domain.RobotView;
+import tech.becoming.modernspringboot.domain.dto.NewRobotRequest;
+import tech.becoming.modernspringboot.domain.dto.PatchRobotRequest;
+import tech.becoming.modernspringboot.domain.dto.RobotView;
 import tech.becoming.modernspringboot.domain.RobotsService;
 
 import java.util.List;

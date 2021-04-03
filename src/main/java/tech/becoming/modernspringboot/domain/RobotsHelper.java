@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import tech.becoming.common.exceptions.BadRequestException;
 import tech.becoming.common.exceptions.ExceptionDetail;
+import tech.becoming.modernspringboot.domain.dto.NewRobotRequest;
+import tech.becoming.modernspringboot.domain.dto.PatchRobotRequest;
 import tech.becoming.modernspringboot.properties.MainProperties;
 
 import java.util.ArrayList;

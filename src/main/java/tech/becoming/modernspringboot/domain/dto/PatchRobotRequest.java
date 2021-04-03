@@ -1,4 +1,4 @@
-package tech.becoming.modernspringboot.domain;
+package tech.becoming.modernspringboot.domain.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

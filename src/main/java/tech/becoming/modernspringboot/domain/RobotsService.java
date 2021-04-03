@@ -51,11 +51,11 @@ public class RobotsService {
                 .map(mapper::toDto);
     }
 
-    public Try<RobotView> update(Long id, PatchRobotRequest dto) {
+    public Try<RobotView> applyPatch(Long id, PatchRobotRequest dto) {
         return Try.run(() -> helper.validate(dto))
                 .map($ -> repository.findById(id))
                 .map(it -> it.orElseThrow(NotFoundException::new))
-                .map(it -> update(it, dto))
+                .map(it -> applyPatch(it, dto))
                 .map(repository::save)
                 .map(mapper::toDto);
     }
@@ -68,7 +68,7 @@ public class RobotsService {
         return robot;
     }
 
-    private Robot update(Robot robot, PatchRobotRequest dto) {
+    private Robot applyPatch(Robot robot, PatchRobotRequest dto) {
         robot.setName(dto.getName());
         robot.setDescription(dto.getDescription());
         robot.setUpdated(Instant.now());

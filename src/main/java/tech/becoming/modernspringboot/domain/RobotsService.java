@@ -51,7 +51,7 @@ public class RobotsService {
                 .map(mapper::toDto);
     }
 
-    public Try<RobotView> applyPatch(Long id, PatchRobotRequest dto) {
+    public Try<RobotView> update(Long id, PatchRobotRequest dto) {
         return Try.run(() -> helper.validate(dto))
                 .map($ -> repository.findById(id))
                 .map(it -> it.orElseThrow(NotFoundException::new))

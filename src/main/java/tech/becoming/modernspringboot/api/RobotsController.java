@@ -39,7 +39,7 @@ public class RobotsController {
     @PutMapping("{id}")
     public ResponseEntity<String> update(@PathVariable Long id,
                                          @RequestBody PatchRobotRequest dto) {
-        return service.applyPatch(id, dto).transform(helper::toJson);
+        return service.update(id, dto).transform(helper::toJson);
     }
 
 }

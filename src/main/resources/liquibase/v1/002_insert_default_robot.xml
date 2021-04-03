@@ -8,7 +8,7 @@
     <changeSet id="0" author="rodi">
         <insert tableName="robots" schemaName="modern_spring_boot">
             <column name="id" valueNumeric="1" />
-            <column name="internalUid" value="123e4567-e89b-12d3-a456-426614174000" />
+            <column name="internal_uid" value="123e4567-e89b-12d3-a456-426614174000" />
             <column name="name" value="Foo Bar Robot" />
             <column name="description" value="Default robot added by liquibase" />
             <column name="created" valueComputed="NOW()" />

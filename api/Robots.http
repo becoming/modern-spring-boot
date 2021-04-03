@@ -27,7 +27,7 @@ PUT localhost:7070/robots/2
 Content-Type: application/json
 
 {
-"name": "new robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated name",
+"name": "new robot - updated name",
 "description": "new robot created with API - updated description"
 
 }

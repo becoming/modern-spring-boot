@@ -3,7 +3,6 @@ package tech.becoming.modernspringboot.api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tech.becoming.common.exceptions.NotFoundException;
-import tech.becoming.modernspringboot.domain.Robot;
 import tech.becoming.modernspringboot.domain.RobotsService;
 
 import java.util.List;

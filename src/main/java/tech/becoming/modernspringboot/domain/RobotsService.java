@@ -14,7 +14,6 @@ import tech.becoming.modernspringboot.domain.dto.RobotView;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -40,31 +39,27 @@ public class RobotsService {
     public Try<RobotView> findById(Long id) {
         return Try.of(() -> id)
                 .andThen(helper::validateId)
-                .mapTry($ -> repository.findById(id))
-                .mapTry(Optional::get)
-                .mapTry(mapper::toDto)
+                .map($ -> repository.findById(id))
+                .map(it -> it.orElseThrow(NotFoundException::new))
+                .map(mapper::toDto)
                 .onFailure(throwable -> log.error(throwable.getMessage()));
     }
 
-    public RobotView create(NewRobotRequest dto) {
-        helper.validate(dto);
-        var robot = mapper.toEntity(dto);
-        robot = setupNew(robot);
-        robot = repository.save(robot);
-
-        return mapper.toDto(robot);
+    public Try<RobotView> create(NewRobotRequest dto) {
+        return Try.run(() -> helper.validate(dto))
+                .map($ -> mapper.toEntity(dto))
+                .map(this::setupNew)
+                .map(repository::save)
+                .map(mapper::toDto);
     }
 
-    public RobotView update(Long id, PatchRobotRequest dto) {
-        var robot = repository
-                .findById(id)
-                .orElseThrow(NotFoundException::new);
-
-        helper.validate(dto);
-        robot = update(robot, dto);
-        robot = repository.save(robot);
-
-        return mapper.toDto(robot);
+    public Try<RobotView> update(Long id, PatchRobotRequest dto) {
+        return Try.run(() -> helper.validate(dto))
+                .map($ -> repository.findById(id))
+                .map(it -> it.orElseThrow(NotFoundException::new))
+                .map(it -> update(it, dto))
+                .map(repository::save)
+                .map(mapper::toDto);
     }
 
     private Robot setupNew(Robot robot) {

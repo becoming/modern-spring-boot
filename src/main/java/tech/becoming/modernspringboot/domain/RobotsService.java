@@ -4,7 +4,6 @@ import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import tech.becoming.common.exceptions.NotFoundException;
 import tech.becoming.modernspringboot.domain.dto.NewRobotRequest;
@@ -12,7 +11,6 @@ import tech.becoming.modernspringboot.domain.dto.PatchRobotRequest;
 import tech.becoming.modernspringboot.domain.dto.RobotView;
 
 import java.time.Instant;
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -30,8 +28,7 @@ public class RobotsService {
         return Try.run(() -> helper.validatePage(page, size))
                 .map($ -> PageRequest.of(page, size))
                 .map(repository::findAll)
-                .map(Slice::getContent)
-                .map(Collection::stream)
+                .map(robots -> robots.getContent().stream())
                 .map(stream -> stream.map(mapper::toDto))
                 .map(stream -> stream.collect(Collectors.toList()));
     }

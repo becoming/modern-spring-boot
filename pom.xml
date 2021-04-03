@@ -26,6 +26,13 @@
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/becoming/*</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -49,6 +56,12 @@
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
             <version>${org.liquibase.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tech.becoming</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency>

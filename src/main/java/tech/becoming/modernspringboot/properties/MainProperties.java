@@ -12,4 +12,6 @@ import org.springframework.stereotype.Component;
 public class MainProperties {
 
     private String cors = "localhost";
+    private int maxPageSize = 50;
+
 }

@@ -17,7 +17,7 @@ public class ControllerHelper {
 
     private final ObjectMapper objectMapper;
 
-    public ResponseEntity<String> toResponse(Try<?> t) {
+    public ResponseEntity<String> toJson(Try<?> t) {
 
         return t.mapTry(objectMapper::writeValueAsString)
                 .map(this::ok)

@@ -4,8 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import tech.becoming.common.exceptions.BadRequestException;
 import tech.becoming.common.exceptions.ExceptionDetail;
-import tech.becoming.modernspringboot.api.NewRobotDto;
-import tech.becoming.modernspringboot.api.PatchRobotDto;
 import tech.becoming.modernspringboot.properties.MainProperties;
 
 import java.util.ArrayList;
@@ -72,7 +70,7 @@ public class RobotsHelper {
         }
     }
 
-    public void validate(NewRobotDto dto) {
+    public void validate(NewRobotRequest dto) {
         List<ExceptionDetail> details = new ArrayList<>();
         if (isEmpty(dto.getName())) {
             final var i = ExceptionDetail
@@ -101,7 +99,7 @@ public class RobotsHelper {
 
     // suppressed for the sake of demo
     @SuppressWarnings("DuplicatedCode")
-    public void validate(PatchRobotDto dto) {
+    public void validate(PatchRobotRequest dto) {
         List<ExceptionDetail> details = new ArrayList<>();
         if (isEmpty(dto.getName())) {
             final var i = ExceptionDetail

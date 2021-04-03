@@ -1,4 +1,4 @@
-package tech.becoming.modernspringboot.api;
+package tech.becoming.modernspringboot.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,7 +7,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PatchRobotDto {
+public class NewRobotRequest {
 
     private String name;
     private String description;

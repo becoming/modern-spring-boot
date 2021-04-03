@@ -1,4 +1,4 @@
-package tech.becoming.modernspringboot.api;
+package tech.becoming.modernspringboot.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,7 +7,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class RobotDto {
+public class RobotView {
 
     private Long id;
     private String name;

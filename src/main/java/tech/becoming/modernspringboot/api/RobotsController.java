@@ -2,11 +2,12 @@ package tech.becoming.modernspringboot.api;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import tech.becoming.modernspringboot.domain.RobotsMapper;
+import tech.becoming.modernspringboot.domain.NewRobotRequest;
+import tech.becoming.modernspringboot.domain.PatchRobotRequest;
+import tech.becoming.modernspringboot.domain.RobotView;
 import tech.becoming.modernspringboot.domain.RobotsService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("robots")
@@ -14,38 +15,28 @@ import java.util.stream.Collectors;
 public class RobotsController {
 
     private final RobotsService service;
-    private final RobotsMapper  mapper;
 
     @GetMapping
-    public List<RobotDto> getRobots(@RequestParam(defaultValue = "0") int page,
-                                    @RequestParam(defaultValue = "50") int size) {
+    public List<RobotView> getRobots(@RequestParam(defaultValue = "0") int page,
+                                     @RequestParam(defaultValue = "50") int size) {
 
-        return service.findInRange(page, size)
-                .stream()
-                .map(mapper::toDto)
-                .collect(Collectors.toList());
+        return service.findInRange(page, size);
     }
 
     @GetMapping("{id}")
-    public RobotDto getRobot(@PathVariable Long id) {
-        var robot = service.findById(id);
-
-        return mapper.toDto(robot);
+    public RobotView getRobot(@PathVariable Long id) {
+        return service.findById(id);
     }
 
     @PostMapping
-    public RobotDto create(@RequestBody NewRobotDto dto) {
-        var robot = service.create(dto);
-
-        return mapper.toDto(robot);
+    public RobotView create(@RequestBody NewRobotRequest dto) {
+        return service.create(dto);
     }
 
     @PutMapping("{id}")
-    public RobotDto update(@PathVariable Long id,
-                           @RequestBody PatchRobotDto dto) {
-        var robot = service.update(id, dto);
-
-        return mapper.toDto(robot);
+    public RobotView update(@PathVariable Long id,
+                            @RequestBody PatchRobotRequest dto) {
+        return service.update(id, dto);
     }
 
 }

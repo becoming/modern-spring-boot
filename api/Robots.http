@@ -1,13 +1,16 @@
+# Get robot with Id 1
 GET localhost:7070/robots/1
 Content-Type: application/json
 
 ###
 
+# Get all robots, paginated
 GET localhost:7070/robots
 Content-Type: application/json
 
 ###
 
+# Create new robot
 POST localhost:7070/robots
 Content-Type: application/json
 
@@ -19,11 +22,24 @@ Content-Type: application/json
 
 ###
 
+# Normal update
 PUT localhost:7070/robots/2
 Content-Type: application/json
 
 {
-"name": "new robot - updated name",
+"name": "new robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated name",
+"description": "new robot created with API - updated description"
+
+}
+
+###
+
+# Failing update, too long name
+PUT localhost:7070/robots/2
+Content-Type: application/json
+
+{
+"name": "new robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated namenew robot - updated name",
 "description": "new robot created with API - updated description"
 
 }

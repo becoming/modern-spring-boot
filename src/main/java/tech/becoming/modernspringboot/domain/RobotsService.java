@@ -57,7 +57,7 @@ public class RobotsService {
                 .orElseThrow(NotFoundException::new);
 
         helper.validate(dto);
-        robot = update(robot, dto);
+        robot = applyPatch(robot, dto);
         robot = repository.save(robot);
 
         return mapper.toDto(robot);
@@ -71,7 +71,7 @@ public class RobotsService {
         return robot;
     }
 
-    private Robot update(Robot robot, PatchRobotRequest dto) {
+    private Robot applyPatch(Robot robot, PatchRobotRequest dto) {
         robot.setName(dto.getName());
         robot.setDescription(dto.getDescription());
         robot.setUpdated(Instant.now());

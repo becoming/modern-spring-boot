@@ -44,17 +44,19 @@ public class RobotsService {
     }
 
     public Try<RobotView> create(NewRobotRequest dto) {
-        return Try.run(() -> helper.validate(dto))
-                .map($ -> mapper.toEntity(dto))
+        return Try.of(() -> dto)
+                .map(helper::validate)
+                .map(mapper::toEntity)
                 .map(this::setupNew)
                 .map(repository::save)
                 .map(mapper::toDto);
     }
 
     public Try<RobotView> update(Long id, PatchRobotRequest dto) {
-        return Try.run(() -> helper.validate(dto))
+        return Try.of(() -> dto)
+                .map(helper::validate)
                 .map($ -> repository.findById(id))
-                .map(it -> it.orElseThrow(NotFoundException::new))
+                .map(NotFoundException::throwIfEmpty)
                 .map(it -> applyPatch(it, dto))
                 .map(repository::save)
                 .map(mapper::toDto);

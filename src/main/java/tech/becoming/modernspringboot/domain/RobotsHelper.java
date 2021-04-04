@@ -66,7 +66,8 @@ class RobotsHelper {
         return id;
     }
 
-    public void validate(NewRobotRequest dto) {
+    @SuppressWarnings("DuplicatedCode")
+    public NewRobotRequest validate(NewRobotRequest dto) {
         List<ExceptionDetail> details = new ArrayList<>();
         if (isEmpty(dto.getName())) {
             var i = ExceptionDetail.ofNameAndMessage(
@@ -85,11 +86,13 @@ class RobotsHelper {
         }
 
         BadRequestException.throwIfHasDetails(details);
+
+        return dto;
     }
 
     // suppressed for the sake of demo
     @SuppressWarnings("DuplicatedCode")
-    public void validate(PatchRobotRequest dto) {
+    public PatchRobotRequest validate(PatchRobotRequest dto) {
         List<ExceptionDetail> details = new ArrayList<>();
         if (isEmpty(dto.getName())) {
             var i = ExceptionDetail.ofNameAndMessage(
@@ -108,6 +111,8 @@ class RobotsHelper {
         }
 
         BadRequestException.throwIfHasDetails(details);
+
+        return dto;
     }
 
     private boolean isEmpty(String s) {

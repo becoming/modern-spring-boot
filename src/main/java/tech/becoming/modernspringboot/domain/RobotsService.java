@@ -62,7 +62,7 @@ public class RobotsService {
                 .map(mapper::toDto);
     }
 
-    private Robot setupNew(Robot robot) {
+    Robot setupNew(Robot robot) {
         robot.setCreated(Instant.now());
         robot.setUpdated(Instant.now());
         robot.setInternalUid(UUID.randomUUID().toString());
@@ -70,7 +70,7 @@ public class RobotsService {
         return robot;
     }
 
-    private Robot applyPatch(Robot robot, PatchRobotRequest dto) {
+    Robot applyPatch(Robot robot, PatchRobotRequest dto) {
         robot.setName(dto.getName());
         robot.setDescription(dto.getDescription());
         robot.setUpdated(Instant.now());

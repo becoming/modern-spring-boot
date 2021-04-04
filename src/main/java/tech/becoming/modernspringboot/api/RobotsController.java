@@ -2,6 +2,7 @@ package tech.becoming.modernspringboot.api;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.becoming.modernspringboot.domain.RobotsService;
@@ -21,7 +22,7 @@ public class RobotsController {
     public ResponseEntity<String> getRobots(@RequestParam(defaultValue = "0") int page,
                                             @RequestParam(defaultValue = "50") int size) {
         return service
-                .findInRange(page, size)
+                .findInRange(PageRequest.of(page, size))
                 .onFailure(e -> log.debug("Error occurred while finding in range, e: {}", e.getMessage()))
                 .transform(helper::toJson);
     }

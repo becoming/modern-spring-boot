@@ -1,6 +1,7 @@
 package tech.becoming.modernspringboot.domain;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import tech.becoming.common.exceptions.BadRequestException;
 import tech.becoming.common.exceptions.ExceptionDetail;
@@ -17,10 +18,10 @@ class RobotsHelper {
 
     private final MainProperties properties;
 
-    public void validatePage(int page, int size) {
+    public PageRequest validatePage(PageRequest pageRequest) {
         List<ExceptionDetail> details = new ArrayList<>();
 
-        if (page < 0) {
+        if (pageRequest.getPageNumber() < 0) {
             var i = ExceptionDetail.ofNameAndMessage(
                     "page",
                     "Page value must be a positive number.");
@@ -28,7 +29,7 @@ class RobotsHelper {
             details.add(i);
         }
 
-        if (size < 0) {
+        if (pageRequest.getPageSize() < 0) {
             var i = ExceptionDetail.ofNameAndMessage(
                     "size",
                     "Size value must be a positive number.");
@@ -36,7 +37,7 @@ class RobotsHelper {
             details.add(i);
         }
 
-        if (size > properties.getMaxPageSize()) {
+        if (pageRequest.getPageSize() > properties.getMaxPageSize()) {
             var i = ExceptionDetail.ofNameAndMessage(
                     "size",
                     "Size value must be lower than " + properties.getMaxPageSize() + ".");
@@ -45,6 +46,8 @@ class RobotsHelper {
         }
 
         BadRequestException.throwIfHasDetails(details);
+
+        return pageRequest;
     }
 
     public void validateId(Long id) {

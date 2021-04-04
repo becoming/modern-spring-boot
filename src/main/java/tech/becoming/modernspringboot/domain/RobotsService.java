@@ -3,7 +3,9 @@ package tech.becoming.modernspringboot.domain;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import tech.becoming.common.exceptions.NotFoundException;
 import tech.becoming.modernspringboot.domain.dto.NewRobotRequest;
@@ -24,21 +26,19 @@ public class RobotsService {
     private final RobotsHelper     helper;
     private final RobotsMapper     mapper;
 
-    public Try<List<RobotView>> findInRange(int page, int size) {
-        return Try.run(() -> helper.validatePage(page, size))
-                .map($ -> PageRequest.of(page, size))
+    public Try<List<RobotView>> findInRange(PageRequest pageRequest) {
+        return Try.of(() -> pageRequest)
+                .map(helper::validatePage)
                 .map(repository::findAll)
-                .map(robots -> robots.getContent().stream())
-                .map(stream -> stream.map(mapper::toDto))
-                .map(stream -> stream.collect(Collectors.toList()))
-                .onFailure(e -> log.error("Could not perform the find in range."));
+                .map(mapper::toDto)
+                .onFailure(e -> log.error("Could not perform the find in range, e: {}", e.getMessage()));
     }
 
     public Try<RobotView> findById(Long id) {
         return Try.of(() -> id)
                 .andThen(helper::validateId)
                 .map($ -> repository.findById(id))
-                .map(it -> it.orElseThrow(NotFoundException::new))
+                .map(robot -> robot.orElseThrow(NotFoundException::new))
                 .map(mapper::toDto)
                 .onFailure(throwable -> log.error(throwable.getMessage()));
     }

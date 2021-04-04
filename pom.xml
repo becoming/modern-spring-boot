@@ -61,7 +61,7 @@
         <dependency>
             <groupId>tech.becoming</groupId>
             <artifactId>common</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.3-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>io.vavr</groupId>
@@ -86,17 +86,17 @@
             <optional>true</optional>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>co.elastic.apm</groupId>-->
-<!--            <artifactId>apm-agent-attach</artifactId>-->
-<!--            <version>${elastic-apm.version}</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>co.elastic.apm</groupId>
+            <artifactId>apm-agent-attach</artifactId>
+            <version>${elastic-apm.version}</version>
+        </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>co.elastic.logging</groupId>-->
-<!--            <artifactId>logback-ecs-encoder</artifactId>-->
-<!--            <version>0.4.0</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>co.elastic.logging</groupId>
+            <artifactId>logback-ecs-encoder</artifactId>
+            <version>0.4.0</version>
+        </dependency>
 
     </dependencies>
 

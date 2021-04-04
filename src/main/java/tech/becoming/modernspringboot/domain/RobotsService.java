@@ -36,9 +36,9 @@ public class RobotsService {
 
     public Try<RobotView> findById(Long id) {
         return Try.of(() -> id)
-                .andThen(helper::validateId)
-                .map($ -> repository.findById(id))
-                .map(robot -> robot.orElseThrow(NotFoundException::new))
+                .map(helper::validateId)
+                .map(repository::findById)
+                .map(NotFoundException::throwIfEmpty)
                 .map(mapper::toDto)
                 .onFailure(throwable -> log.error(throwable.getMessage()));
     }

@@ -50,7 +50,7 @@ class RobotsHelper {
         return pageRequest;
     }
 
-    public void validateId(Long id) {
+    public Long validateId(Long id) {
         List<ExceptionDetail> details = new ArrayList<>();
 
         if (id < 0) {
@@ -62,6 +62,8 @@ class RobotsHelper {
         }
 
         BadRequestException.throwIfHasDetails(details);
+
+        return id;
     }
 
     public void validate(NewRobotRequest dto) {

@@ -6,6 +6,7 @@ https://www.elastic.co/guide/en/beats/filebeat/current/running-on-docker.html
 https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-source-field.html
 https://micrometer.io/docs/registry/elastic
 https://www.elastic.co/guide/en/apm/get-started/current/quick-start-overview.html
+https://docs.spring.io/spring-boot/docs/2.0.0.M3/reference/html/howto-properties-and-configuration.html
 
 Downloaded to be able to build if liquibase domain is not accessible
 dbchangelog-2.0.xsd

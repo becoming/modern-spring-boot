@@ -1,7 +1,11 @@
 package tech.becoming.modernspringboot.domain;
 
+import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import tech.becoming.common.exceptions.NotFoundException;
 import tech.becoming.modernspringboot.domain.dto.NewRobotRequest;
@@ -15,55 +19,50 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class RobotsService {
 
     private final RobotsRepository repository;
     private final RobotsHelper     helper;
     private final RobotsMapper     mapper;
 
-    public List<RobotView> findInRange(int page, int size) {
-        helper.validatePage(page, size);
-
-        return repository
-                .findAll(PageRequest.of(page, size))
-                .getContent()
-                .stream()
+    public Try<List<RobotView>> findInRange(PageRequest pageRequest) {
+        return Try.of(() -> pageRequest)
+                .map(helper::validatePage)
+                .map(repository::findAll)
                 .map(mapper::toDto)
-                .collect(Collectors.toList());
+                .onFailure(e -> log.error("Could not perform the find in range, e: {}", e.getMessage()));
     }
 
-    public RobotView findById(Long id) {
-        helper.validateId(id);
-
-        var robot = repository
-                .findById(id)
-                .orElseThrow(NotFoundException::new);
-
-        return mapper.toDto(robot);
+    public Try<RobotView> findById(Long id) {
+        return Try.of(() -> id)
+                .map(helper::validateId)
+                .map(repository::findById)
+                .map(NotFoundException::throwIfEmpty)
+                .map(mapper::toDto)
+                .onFailure(throwable -> log.error(throwable.getMessage()));
     }
 
-    public RobotView create(NewRobotRequest dto) {
-        helper.validate(dto);
-        var robot = mapper.toEntity(dto);
-        robot = setupNew(robot);
-        robot = repository.save(robot);
-
-        return mapper.toDto(robot);
+    public Try<RobotView> create(NewRobotRequest dto) {
+        return Try.of(() -> dto)
+                .map(helper::validate)
+                .map(mapper::toEntity)
+                .map(this::setupNew)
+                .map(repository::save)
+                .map(mapper::toDto);
     }
 
-    public RobotView update(Long id, PatchRobotRequest dto) {
-        var robot = repository
-                .findById(id)
-                .orElseThrow(NotFoundException::new);
-
-        helper.validate(dto);
-        robot = applyPatch(robot, dto);
-        robot = repository.save(robot);
-
-        return mapper.toDto(robot);
+    public Try<RobotView> update(Long id, PatchRobotRequest dto) {
+        return Try.of(() -> dto)
+                .map(helper::validate)
+                .map($ -> repository.findById(id))
+                .map(NotFoundException::throwIfEmpty)
+                .map(it -> applyPatch(it, dto))
+                .map(repository::save)
+                .map(mapper::toDto);
     }
 
-    private Robot setupNew(Robot robot) {
+    Robot setupNew(Robot robot) {
         robot.setCreated(Instant.now());
         robot.setUpdated(Instant.now());
         robot.setInternalUid(UUID.randomUUID().toString());
@@ -71,7 +70,7 @@ public class RobotsService {
         return robot;
     }
 
-    private Robot applyPatch(Robot robot, PatchRobotRequest dto) {
+    Robot applyPatch(Robot robot, PatchRobotRequest dto) {
         robot.setName(dto.getName());
         robot.setDescription(dto.getDescription());
         robot.setUpdated(Instant.now());

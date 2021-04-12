@@ -21,7 +21,7 @@ To see differences when using and not using Vavr, please take a look at the bran
 - https://www.elastic.co/guide/en/apm/get-started/current/quick-start-overview.html
 - https://docs.spring.io/spring-boot/docs/2.0.0.M3/reference/html/howto-properties-and-configuration.html
 - https://www.baeldung.com/jvm-parameters
-
+- https://www.oracle.com/java/technologies/javase/vmoptions-jsp.html
 
 Downloaded to be able to build if liquibase domain is not accessible
 

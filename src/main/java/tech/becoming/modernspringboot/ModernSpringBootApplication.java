@@ -1,9 +1,8 @@
 package tech.becoming.modernspringboot;
 
-import co.elastic.apm.attach.ElasticApmAttacher;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import co.elastic.apm.attach.ElasticApmAttacher;
 
 @SpringBootApplication
 public class ModernSpringBootApplication {

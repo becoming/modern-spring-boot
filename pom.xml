@@ -107,9 +107,11 @@
 
     <build>
         <finalName>app</finalName>
+        <!-- https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto-properties-and-configuration-->
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
+                <filtering>true</filtering>
                 <excludes>
                     <exclude>**/*-local.*</exclude>
                 </excludes>

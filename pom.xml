@@ -19,19 +19,12 @@
         <java.version>11</java.version>
         <maven.compiler.version>3.8.1</maven.compiler.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
-        <org.projectlombok.version>1.18.16</org.projectlombok.version>
+        <org.projectlombok.version>1.18.22</org.projectlombok.version>
         <org.projectlombok.binding.version>0.2.0</org.projectlombok.binding.version>
-        <org.liquibase.version>3.8.5</org.liquibase.version>
-        <elastic-apm.version>1.21.0</elastic-apm.version>
+        <org.liquibase.version>4.6.1</org.liquibase.version>
+        <elastic-apm.version>1.27.0</elastic-apm.version>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
     </properties>
-
-    <repositories>
-        <repository>
-            <id>github</id>
-            <url>https://maven.pkg.github.com/becoming/*</url>
-        </repository>
-    </repositories>
 
     <dependencies>
         <dependency>
@@ -61,12 +54,12 @@
         <dependency>
             <groupId>tech.becoming</groupId>
             <artifactId>common</artifactId>
-            <version>1.0.3</version>
+            <version>1.0.6</version>
         </dependency>
         <dependency>
             <groupId>io.vavr</groupId>
             <artifactId>vavr</artifactId>
-            <version>0.10.3</version>
+            <version>0.10.4</version>
         </dependency>
         <dependency>
             <groupId>io.vavr</groupId>
@@ -100,7 +93,7 @@
         <dependency>
             <groupId>co.elastic.logging</groupId>
             <artifactId>logback-ecs-encoder</artifactId>
-            <version>0.4.0</version>
+            <version>1.2.0</version>
         </dependency>
 
     </dependencies>

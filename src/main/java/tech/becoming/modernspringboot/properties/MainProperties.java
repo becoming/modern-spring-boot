@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("app.api")
 @Getter
 @Setter
-public class MainProperties {
+public class MainProperties  {
 
     private String cors = "localhost";
     private int maxPageSize = 50;

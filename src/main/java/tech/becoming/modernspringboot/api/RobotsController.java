@@ -18,7 +18,7 @@ import java.util.List;
 @Slf4j
 public class RobotsController {
 
-    private final RobotsService    service;
+    private final RobotsService service;
 
     @GetMapping
     public Try<List<RobotView>> getRobots(@RequestParam(defaultValue = "0") int page,

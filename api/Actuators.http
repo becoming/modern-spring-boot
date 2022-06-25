@@ -1,5 +1,10 @@
+GET localhost:7070/actuator
+
+###
+
 GET localhost:7070/actuator/info
 
 ###
 
 GET localhost:7070/actuator/health
+

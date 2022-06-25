@@ -2,10 +2,10 @@ package tech.becoming.modernspringboot.api;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import tech.becoming.modernspringboot.domain.RobotsService;
 import tech.becoming.modernspringboot.domain.dto.NewRobotRequest;
 import tech.becoming.modernspringboot.domain.dto.PatchRobotRequest;
 import tech.becoming.modernspringboot.domain.dto.RobotView;
-import tech.becoming.modernspringboot.domain.RobotsService;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RobotsController {
 
-    private final RobotsService service;
+    private final RobotsService    service;
 
     @GetMapping
     public List<RobotView> getRobots(@RequestParam(defaultValue = "0") int page,

@@ -5,26 +5,30 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.3</version>
+        <version>2.7.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>tech.becoming</groupId>
-    <artifactId>modernspringboot</artifactId>
-    <!--    It is good to have a meaningful name, it helps when using the Maven Panel inside Intellij Idea -->
+    <groupId>tech.becoming.modernspringboot</groupId>
+    <artifactId>app</artifactId>
     <name>Modern Spring Boot / app</name>
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
-        <java.version>11</java.version>
-        <maven.compiler.version>3.8.1</maven.compiler.version>
-        <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
-        <org.projectlombok.version>1.18.22</org.projectlombok.version>
-        <org.projectlombok.binding.version>0.2.0</org.projectlombok.binding.version>
-        <org.liquibase.version>4.6.1</org.liquibase.version>
-        <elastic-apm.version>1.27.0</elastic-apm.version>
-        <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
+        <java.version>17</java.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>2021.0.3</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -39,44 +43,44 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-            <version>${org.liquibase.version}</version>
+            <version>4.11.0</version>
         </dependency>
 
         <dependency>
             <groupId>tech.becoming</groupId>
             <artifactId>common</artifactId>
-            <version>1.0.6</version>
+            <version>1.1.1</version>
         </dependency>
+
         <dependency>
             <groupId>io.vavr</groupId>
             <artifactId>vavr</artifactId>
-            <version>0.10.4</version>
-        </dependency>
-        <dependency>
-            <groupId>io.vavr</groupId>
-            <artifactId>vavr-jackson</artifactId>
             <version>0.10.3</version>
         </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>${org.projectlombok.version}</version>
+            <version>1.18.24</version>
             <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-            <version>${org.mapstruct.version}</version>
+            <version>1.5.1.Final</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -87,29 +91,25 @@
         <dependency>
             <groupId>co.elastic.apm</groupId>
             <artifactId>apm-agent-attach</artifactId>
-            <version>${elastic-apm.version}</version>
+            <version>1.32.0</version>
         </dependency>
 
         <dependency>
             <groupId>co.elastic.logging</groupId>
             <artifactId>logback-ecs-encoder</artifactId>
-            <version>1.2.0</version>
+            <version>1.4.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.6.9</version>
         </dependency>
 
     </dependencies>
 
     <build>
         <finalName>app</finalName>
-        <!-- https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto-properties-and-configuration-->
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-                <excludes>
-                    <exclude>**/*-local.*</exclude>
-                </excludes>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -126,7 +126,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>${maven-jar-plugin.version}</version>
+                <version>3.2.2</version>
                 <configuration>
                     <excludes>
                         <exclude>**/*-local.*</exclude>
@@ -145,17 +145,28 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
             </plugin>
 
             <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
+                <configuration>
+                    <failOnNoGitDirectory>false</failOnNoGitDirectory>
+                </configuration>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.version}</version>
+                <version>3.8.1</version>
                 <configuration>
                     <release>${java.version}</release>
                     <source>${java.version}</source>
@@ -167,19 +178,19 @@
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
-                            <version>${org.projectlombok.version}</version>
+                            <version>1.18.24</version>
                         </path>
                         <path>
                             <!-- This is needed when using Lombok 1.18.16 and above -->
                             <!-- https://github.com/rzwitserloot/lombok/tree/master/src/bindings/mapstruct -->
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok-mapstruct-binding</artifactId>
-                            <version>${org.projectlombok.binding.version}</version>
+                            <version>0.2.0</version>
                         </path>
                         <path>
                             <groupId>org.mapstruct</groupId>
                             <artifactId>mapstruct-processor</artifactId>
-                            <version>${org.mapstruct.version}</version>
+                            <version>1.5.1.Final</version>
                         </path>
                         <dependency>
                             <groupId>org.springframework.boot</groupId>
@@ -187,6 +198,11 @@
                             <version>${project.parent.version}</version>
                         </dependency>
                     </annotationProcessorPaths>
+                    <compilerArgs>
+                        <arg>
+                            -Amapstruct.defaultComponentModel=spring
+                        </arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
 
@@ -196,12 +212,16 @@
     <profiles>
         <profile>
             <id>jib</id>
+            <properties>
+                <registry.user/>
+                <registry.password/>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>com.google.cloud.tools</groupId>
                         <artifactId>jib-maven-plugin</artifactId>
-                        <version>2.8.0</version>
+                        <version>3.2.0</version>
                         <executions>
                             <execution>
                                 <phase>package</phase>
@@ -212,38 +232,53 @@
                         </executions>
                         <configuration>
                             <from>
-                                <image>gcr.io/distroless/java:11</image>
+                                <image>gcr.io/distroless/java17:nonroot</image>
                             </from>
                             <to>
-                                <image>becoming/${project.artifactId}:${project.version}</image>
+                                <image>becoming/${project.artifactId}</image>
+                                <tags>
+                                    <tag>${project.version}</tag>
+                                    <tag>latest</tag>
+                                </tags>
                                 <auth>
-                                    <username>${env.DOCKER_USERNAME}</username>
-                                    <password>${env.DOCKER_PASSWORD}</password>
+                                    <username>${registry.user}</username>
+                                    <password>${registry.password}</password>
                                 </auth>
                             </to>
                             <container>
                                 <environment>
-                                    <!-- https://www.elastic.co/guide/en/apm/agent/java/current/configuration.html-->
-                                    <SPRING_PROFILES_ACTIVE>actuators,logging,datasource</SPRING_PROFILES_ACTIVE>
+                                    <SPRING_JPA_SHOW-SQL>false</SPRING_JPA_SHOW-SQL>
+                                    <SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL>false</SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL>
+
+                                    <SPRINGDOC_SWAGGER-UI_CONFIG-URL>https://becoming.tech/v3/api-docs/swagger-config</SPRINGDOC_SWAGGER-UI_CONFIG-URL>
+                                    <SPRINGDOC_SWAGGER-UI_URLS_0_NAME>Modern Spring Boot</SPRINGDOC_SWAGGER-UI_URLS_0_NAME>
+                                    <SPRINGDOC_SWAGGER-UI_URLS_0_URL>https://becoming.tech/job/v3/api-docs</SPRINGDOC_SWAGGER-UI_URLS_0_URL>
+
+                                    <APP_OPENAPI_SERVER-URL>https://ms.dev.oyesk.com/job</APP_OPENAPI_SERVER-URL>
+                                    <APP_OPENAPI_ENVIRONMENT>DEV</APP_OPENAPI_ENVIRONMENT>
+                                    <APP_OPENAPI_TITLE>${project.artifactId}</APP_OPENAPI_TITLE>
+                                    <APP_OPENAPI_APP_VERSION>${project.version}</APP_OPENAPI_APP_VERSION>
+
+                                    <ELASTIC_APM_ENABLED>true</ELASTIC_APM_ENABLED>
                                     <ELASTIC_APM_SERVICE_NAME>${project.artifactId}</ELASTIC_APM_SERVICE_NAME>
-                                    <ELASTIC_APM_SERVER_URL>https://apm/</ELASTIC_APM_SERVER_URL>
-                                    <ELASTIC_APM_SECRET_TOKEN>apm-local-token</ELASTIC_APM_SECRET_TOKEN>
-                                    <SERVER_PORT>80</SERVER_PORT>
-                                    <SPRING_DATASOURCE_URL>jdbc:h2:mem:modern-spring-boot</SPRING_DATASOURCE_URL>
+                                    <ELASTIC_APM_APPLICATION_PACKAGES>tech.becoming</ELASTIC_APM_APPLICATION_PACKAGES>
+                                    <SERVER_PORT>8080</SERVER_PORT>
                                 </environment>
                                 <ports>
-                                    <port>80</port>
+                                    <port>8080</port>
                                 </ports>
                                 <jvmFlags>
+                                    <jvmFlag>-Xms512m</jvmFlag>
                                     <jvmFlag>-server</jvmFlag>
                                     <jvmFlag>-XshowSettings:vm</jvmFlag>
-                                    <jvmFlag>-XX:-PrintCommandLineFlags</jvmFlag>
                                     <jvmFlag>-XX:+UseG1GC</jvmFlag>
                                     <jvmFlag>-XX:MaxGCPauseMillis=200</jvmFlag>
+                                    <jvmFlag>-XX:ParallelGCThreads=20</jvmFlag>
+                                    <jvmFlag>-XX:ConcGCThreads=5</jvmFlag>
                                     <jvmFlag>-XX:InitiatingHeapOccupancyPercent=70</jvmFlag>
-                                    <jvmFlag>-XX:+UseStringDeduplication</jvmFlag>
-                                    <jvmFlag>-XX:+OptimizeStringConcat</jvmFlag>
+                                    <jvmFlag>-Djava.security.egd=file:/dev/./urandom</jvmFlag>
                                 </jvmFlags>
+                                <format>OCI</format>
                             </container>
                         </configuration>
                     </plugin>

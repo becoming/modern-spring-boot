@@ -8,7 +8,9 @@ import co.elastic.apm.attach.ElasticApmAttacher;
 public class ModernSpringBootApplication {
 
 	public static void main(String[] args) {
-		ElasticApmAttacher.attach();
+		if (System.getenv().containsKey("ELASTIC_APM_ENABLED")) {
+			ElasticApmAttacher.attach();
+		}
 		SpringApplication.run(ModernSpringBootApplication.class, args);
 	}
 
